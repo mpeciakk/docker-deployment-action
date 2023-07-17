@@ -1,0 +1,26 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy:
+    name: docker-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Deploy to machine
+        uses: mpeciakk/docker-deployment-action@main
+        with:
+          remote_host: ${{ secrets.REMOTE_HOST }}
+          ssh_key: ${{ secrets.SSH_KEY }}
+          deploy_path: ${{ secrets.DEPLOY_PATH }}
+          pull_images: true

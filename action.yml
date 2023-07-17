@@ -1,0 +1,34 @@
+name: Remote deployment with Docker Compose
+author: Maciej Peciak <mpeciakk@gmail.com>
+description: A GitHub Action to deploy docker compose applications on remote server using ssh
+inputs:
+  remote_host:
+    description: Remote host (user@host)
+    required: true
+  remote_port:
+    description: Remote ssh port. Default is 22
+    required: false
+    default: '22'
+  ssh_key:
+    description: SSH private key used to connect to the remote host
+    required: true
+  args:
+    description: Deployment command args. Default is up -d
+    required: false
+    default: 'up -d'
+  deploy_path:
+    description: The path where the stack files will be copied to
+    required: true
+  stack_file_name:
+    description: Docker stack file used. Default is docker-compose.yml
+    required: false
+    default: 'docker-compose.yml'
+  pull_images:
+    description: Pull docker images before deploying. Default is false
+    required: false
+    default: 'false'
+
+runs:
+  using: docker
+  image: Dockerfile
+
